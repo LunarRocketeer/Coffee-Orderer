@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cups = 2;
+        cups = 0;
         price = 5;
     }
 
@@ -27,15 +27,26 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        display(cups);
         displayPrice(cups * price);
-        display(cups);
     }
+
+    public void increment(View view){
+        cups++;
+        display();
+    }
+
+    public void decrement(View view){
+        if (cups > 0){
+            cups--;
+            display();
+        }
+    }
+
 
     /**
      * This method displays the given price on the screen.
      */
-    public void displayPrice(int number) {
+    private void displayPrice(int number) {
         TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
         priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
     }
@@ -43,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method displays the given quantity value on the screen.
      */
-    private void display(int number) {
+    private void display() {
         TextView quantityTextView = (TextView) findViewById(
                 R.id.quantity_text_view);
-        quantityTextView.setText("" + number);
+        quantityTextView.setText("" + cups);
     }
 }
