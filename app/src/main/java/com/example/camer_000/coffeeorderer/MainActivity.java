@@ -25,16 +25,25 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * This method is called when the order button is clicked.
+     * It calculates the price to have it displayed.
      */
     public void submitOrder(View view) {
         displayPrice(cups * price);
     }
 
+    /**
+     *This method is called when the plus button is clicked.
+     * It increases cups by 1.
+     */
     public void increment(View view){
         cups++;
         display();
     }
 
+    /**
+     *This method is called when the minus button is clicked.
+     * It increases cups by 1.
+     */
     public void decrement(View view){
         if (cups > 0){
             cups--;
