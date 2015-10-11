@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
      * It calculates the price to have it displayed.
      */
     public void submitOrder(View view) {
-        displayPrice(cups * price);
+        displayPrice(price * cups);
     }
 
     /**
@@ -67,5 +67,13 @@ public class MainActivity extends AppCompatActivity {
         TextView quantityTextView = (TextView) findViewById(
                 R.id.quantity_text_view);
         quantityTextView.setText("" + cups);
+    }
+
+    /**
+     * This method displays the given text on the screen.
+     */
+    private void displayMessage(String message) {
+        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
+        priceTextView.setText(message);
     }
 }
