@@ -13,6 +13,7 @@ import java.text.NumberFormat;
 public class MainActivity extends AppCompatActivity {
     private int cups;
     private int price;
+    private boolean hasWhippedCream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         displayOrderSummary(false);
         cups = 0;
         price = 5;
+        hasWhippedCream = false;
     }
 
     /**
@@ -53,16 +55,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    public void wantsWhippedCream(View view) {
+        hasWhippedCream = flipBoolean(hasWhippedCream);
+        displayOrderSummary(false);
+    }
     /**
      * This method displays the given price on the screen.
      */
     private void displayOrderSummary(boolean last) {
-        String thanks = "";
-        if (last) {
-            thanks = "Thank you!";
+        String orderSummary;
+        orderSummary = "Name: Jeg Kimmmel";
+        orderSummary += "\nCups: ";
+        orderSummary += cups;
+        orderSummary += "\nToppings:";
+        orderSummary += "\n  Whipped Cream: ";
+        if (hasWhippedCream) {
+            orderSummary += "Yes";
         }
-        displayMessage("Name: Jeg Kimmmel \nCups: " + cups + "\nTotal: " + NumberFormat.getCurrencyInstance().format(price * cups) + "\n" + thanks);
+        orderSummary += "\nTotal: ";
+        orderSummary += NumberFormat.getCurrencyInstance().format(price * cups);
+        if (last) {
+            orderSummary += "\nThank you!";
+        }
+        displayMessage(orderSummary);
     }
 
     /**
@@ -80,5 +95,9 @@ public class MainActivity extends AppCompatActivity {
     private void displayMessage(String message) {
         TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
         priceTextView.setText(message);
+    }
+
+    private boolean flipBoolean(Boolean b) {
+        return !b;
     }
 }

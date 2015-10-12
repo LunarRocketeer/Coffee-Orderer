@@ -17,6 +17,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Toppings"
+        android:textAllCaps="true"
+        android:textSize="22sp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="wantsWhippedCream"
+        android:text="Whipped Cream"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Quantity"
         android:textAllCaps="true"
         android:textSize="22sp" />
