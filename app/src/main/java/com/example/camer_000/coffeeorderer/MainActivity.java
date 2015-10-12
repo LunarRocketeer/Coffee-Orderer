@@ -3,6 +3,7 @@ package com.example.camer_000.coffeeorderer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -11,6 +12,7 @@ import java.text.NumberFormat;
  * This app displays an order form to order coffee.
  */
 public class MainActivity extends AppCompatActivity {
+    String name;
     private int cups;
     private int price;
     private boolean hasWhippedCream;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         price = 5;
         hasWhippedCream = false;
         hasChocolate = false;
+        name = "Anon.";
     }
 
     /**
@@ -70,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
      * This method displays the given price on the screen.
      */
     private void displayOrderSummary(boolean last) {
+        checkName();
         String orderSummary;
         String yes = "Yes";
         String no = "None";
-        orderSummary = "Name: Jeg Kimmmel";
+        orderSummary = "Name: " + name;
         orderSummary += "\nCups: ";
         orderSummary += cups;
         orderSummary += "\nToppings:";
@@ -97,6 +101,16 @@ public class MainActivity extends AppCompatActivity {
             orderSummary += "\n";
         }
         displayMessage(orderSummary);
+    }
+
+    private void checkName() {
+        EditText nameField = (EditText) findViewById(R.id.name_field);
+        String s = nameField.getText().toString();
+        if (!s.isEmpty()) {
+            name = s;
+        } else {
+            name = "Anon.";
+        }
     }
 
     /**

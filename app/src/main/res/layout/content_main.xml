@@ -20,6 +20,12 @@
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main">
 
+        <EditText
+            android:id="@+id/name_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Name" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +46,6 @@
             android:onClick="wantsChocolate"
             android:text="Chocolate"
             android:textSize="16sp" />
-
 
         <TextView
             android:layout_width="wrap_content"
