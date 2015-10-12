@@ -1,5 +1,7 @@
 package com.example.camer_000.coffeeorderer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.text.DateFormat;
 
 /**
  * This app displays an order form to order coffee.
@@ -23,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        displayOrderSummary(false);
+        displayOrderSummary();
         cups = 0;
         price = 5;
         hasWhippedCream = false;
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
      * It calculates the price to have it displayed.
      */
     public void submitOrder(View view) {
-        displayOrderSummary(true);
+        sendSummary();
     }
 
     /**
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         if (cups < 100) {
             cups++;
             displayCups();
-            displayOrderSummary(false);
+            displayOrderSummary();
         } else {
             Toast t = Toast.makeText(getApplicationContext(), "Sorry, you can't order more than 100 cups of coffee!", Toast.LENGTH_SHORT);
             t.show();
@@ -63,23 +68,30 @@ public class MainActivity extends AppCompatActivity {
         if (cups > 0) {
             cups--;
             displayCups();
-            displayOrderSummary(false);
+            displayOrderSummary();
         }
     }
 
     public void wantsWhippedCream(View view) {
         hasWhippedCream = flipBoolean(hasWhippedCream);
-        displayOrderSummary(false);
+        displayOrderSummary();
     }
 
     public void wantsChocolate(View view) {
         hasChocolate = flipBoolean(hasChocolate);
-        displayOrderSummary(false);
+        displayOrderSummary();
     }
     /**
      * This method displays the given price on the screen.
      */
-    private void displayOrderSummary(boolean last) {
+    private void displayOrderSummary() {
+        displayMessage(NumberFormat.getCurrencyInstance().format(calculatePrice()));
+    }
+
+    private void sendSummary() {
+        DateFormat df = new SimpleDateFormat("EEE, d MMM, HH:mm");
+        String date = df.format(Calendar.getInstance().getTime());
+
         checkName();
         String orderSummary;
         String yes = "Yes";
@@ -102,12 +114,26 @@ public class MainActivity extends AppCompatActivity {
         }
         orderSummary += "\nTotal: ";
         orderSummary += NumberFormat.getCurrencyInstance().format(calculatePrice());
-        if (last) {
-            orderSummary += "\nThank you!";
-        } else {
-            orderSummary += "\n";
+
+        orderSummary += "\nThank you!";
+
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, "user@gmail.com");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Just Java Order Receipt - " + date);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, orderSummary);
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(MainActivity.this, "There is no email client installed, you weirdo.", Toast.LENGTH_SHORT).show();
         }
-        displayMessage(orderSummary);
+
+
     }
 
     private int calculatePrice() {
