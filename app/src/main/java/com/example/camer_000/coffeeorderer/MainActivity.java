@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         displayOrderSummary(false);
-        cups = 98;
+        cups = 0;
         price = 5;
         hasWhippedCream = false;
         hasChocolate = false;
