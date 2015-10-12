@@ -1,7 +1,6 @@
 package com.example.camer_000.coffeeorderer;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        displayOrderSummary(false);
         cups = 0;
         price = 5;
     }
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
      * It calculates the price to have it displayed.
      */
     public void submitOrder(View view) {
-        displayPrice(price * cups);
+        displayOrderSummary(true);
     }
 
     /**
@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void increment(View view){
         cups++;
-        display();
+        displayCups();
+        displayOrderSummary(false);
     }
 
     /**
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     public void decrement(View view){
         if (cups > 0){
             cups--;
-            display();
+            displayCups();
+            displayOrderSummary(false);
         }
     }
 
@@ -55,15 +57,18 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method displays the given price on the screen.
      */
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+    private void displayOrderSummary(boolean last) {
+        String thanks = "";
+        if (last) {
+            thanks = "Thank you!";
+        }
+        displayMessage("Name: Jeg Kimmmel \nCups: " + cups + "\nTotal: " + NumberFormat.getCurrencyInstance().format(price * cups) + "\n" + thanks);
     }
 
     /**
      * This method displays the given quantity value on the screen.
      */
-    private void display() {
+    private void displayCups() {
         TextView quantityTextView = (TextView) findViewById(
                 R.id.quantity_text_view);
         quantityTextView.setText("" + cups);
