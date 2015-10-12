@@ -94,13 +94,25 @@ public class MainActivity extends AppCompatActivity {
             orderSummary += no;
         }
         orderSummary += "\nTotal: ";
-        orderSummary += NumberFormat.getCurrencyInstance().format(price * cups);
+        orderSummary += NumberFormat.getCurrencyInstance().format(calculatePrice());
         if (last) {
             orderSummary += "\nThank you!";
         } else {
             orderSummary += "\n";
         }
         displayMessage(orderSummary);
+    }
+
+    private int calculatePrice() {
+        int p = cups * price;
+        if (hasWhippedCream) {
+            p += cups;
+        }
+        if (hasChocolate) {
+            p += cups * 2;
+        }
+        return p;
+
     }
 
     private void checkName() {
