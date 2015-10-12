@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         displayOrderSummary(false);
-        cups = 0;
+        cups = 98;
         price = 5;
         hasWhippedCream = false;
         hasChocolate = false;
@@ -43,9 +44,15 @@ public class MainActivity extends AppCompatActivity {
      * It increases cups by 1.
      */
     public void increment(View view){
-        cups++;
-        displayCups();
-        displayOrderSummary(false);
+        if (cups < 100) {
+            cups++;
+            displayCups();
+            displayOrderSummary(false);
+        } else {
+            Toast t = Toast.makeText(getApplicationContext(), "Sorry, you can't order more than 100 cups of coffee!", Toast.LENGTH_SHORT);
+            t.show();
+        }
+
     }
 
     /**
@@ -53,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
      * It increases cups by 1.
      */
     public void decrement(View view){
-        if (cups > 0){
+        if (cups > 0) {
             cups--;
             displayCups();
             displayOrderSummary(false);
