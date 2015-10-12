@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private int cups;
     private int price;
     private boolean hasWhippedCream;
+    private boolean hasChocolate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         cups = 0;
         price = 5;
         hasWhippedCream = false;
+        hasChocolate = false;
     }
 
     /**
@@ -59,23 +61,40 @@ public class MainActivity extends AppCompatActivity {
         hasWhippedCream = flipBoolean(hasWhippedCream);
         displayOrderSummary(false);
     }
+
+    public void wantsChocolate(View view) {
+        hasChocolate = flipBoolean(hasChocolate);
+        displayOrderSummary(false);
+    }
     /**
      * This method displays the given price on the screen.
      */
     private void displayOrderSummary(boolean last) {
         String orderSummary;
+        String yes = "Yes";
+        String no = "None";
         orderSummary = "Name: Jeg Kimmmel";
         orderSummary += "\nCups: ";
         orderSummary += cups;
         orderSummary += "\nToppings:";
         orderSummary += "\n  Whipped Cream: ";
         if (hasWhippedCream) {
-            orderSummary += "Yes";
+            orderSummary += yes;
+        } else {
+            orderSummary += no;
+        }
+        orderSummary += "\n  Chocolate: ";
+        if (hasChocolate) {
+            orderSummary += yes;
+        } else {
+            orderSummary += no;
         }
         orderSummary += "\nTotal: ";
         orderSummary += NumberFormat.getCurrencyInstance().format(price * cups);
         if (last) {
             orderSummary += "\nThank you!";
+        } else {
+            orderSummary += "\n";
         }
         displayMessage(orderSummary);
     }
